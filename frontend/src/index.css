@@ -81,11 +81,18 @@ body{
     padding: 1rem 1rem 1rem 1rem;
 }
 .typing-container{
+    position: relative;
     width: 64rem;
     border-radius: 1rem;
     box-shadow: 0 0 1rem 1rem rgb(43, 43, 43);
-    outline: none;
-    outline-color: greenyellow;
+}
+.cont::after{
+    position: absolute;
+    content: "Press Enter";
+    color: greenyellow;
+    top: 66%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 .text-cursor{
     background-color: rgba(172, 255, 47, 0.8);
@@ -155,4 +162,34 @@ table{
 }
 table>thead>tr>th,table>tbody>tr>td{
     padding: 0.5rem;
+    text-align: center;
+}
+.profile-container{
+    justify-items: center;
+}
+.registration-box{
+    display: grid;
+    grid-template-columns: 256px 256px;
+    column-gap: 4rem;
+    padding: 4.8rem 1.6rem;
+}
+.registerInput{
+    padding: 0.7rem;
+    background-color: #2c2c2c;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    width: 256px;
+    color: rgb(190, 190, 190);
+}
+.registerInput::placeholder{
+    color: #808080;
+}
+.registerbutton{
+    width: 278.2px;
+}
+.signupbox,.signinbox{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }

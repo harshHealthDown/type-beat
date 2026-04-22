@@ -17,7 +17,7 @@ const Rank = ({id,name,speed,raw,accuracy,date}) => {
                 <td style={tdstyle} ><SportShoe/> {speed}</td>
                 <td style={tdstyle} ><SportShoe/> {raw}</td>
                 <td style={tdstyle} >{accuracy}%</td>
-                <td style={{borderTopRightRadius:"1rem",...tdstyle}}>{date}</td>
+                <td style={{borderTopRightRadius:"1rem",...tdstyle}}>{date.slice(0,date.indexOf('T'))}</td>
             </tr>
         )
     }else if (id%11==0) {
@@ -28,7 +28,7 @@ const Rank = ({id,name,speed,raw,accuracy,date}) => {
                 <td style={tdstyle} ><SportShoe/> {speed}</td>
                 <td style={tdstyle} ><SportShoe/> {raw}</td>
                 <td style={tdstyle} >{accuracy}%</td>
-                <td style={{borderBottomRightRadius:"1rem",...tdstyle}}>{date}</td>
+                <td style={{borderBottomRightRadius:"1rem",...tdstyle}}>{date.slice(0,date.indexOf('T'))}</td>
             </tr>
         )
     } else {
@@ -39,7 +39,7 @@ const Rank = ({id,name,speed,raw,accuracy,date}) => {
                 <td style={tdstyle} ><SportShoe/> {speed}</td>
                 <td style={tdstyle} ><SportShoe/> {raw}</td>
                 <td style={tdstyle} >{accuracy}%</td>
-                <td style={tdstyle} >{date}</td>
+                <td style={tdstyle} >{date.slice(0,date.indexOf('T'))}</td>
             </tr>
         )
     }
@@ -50,20 +50,30 @@ const RankPage = () => {
     const [persons,setPersons] = useState([])
     const [page,setPage] = useState(0)
     useEffect(()=>{
-        axios.get('http://localhost:3001/persons').then(res => {
-            console.log(res.data)
+        axios.get('http://localhost:3001/api/users').then(res => {
             setPersons(res.data)
         })
         console.log('get data')
     },[])
-    const display = []
-    for (let i = page; i<page+11; i=i+1) {
-        if (i<persons.length-1) {
-            display.push(persons[i])
-        }else{
-            display.push({id:"",name:"",speed:"",rawspeed:"",accuracy:"",lastupdated:""})
+    console.log(persons,'he')
+    let display = []
+    for (let i = 0; i<persons.length; i++) {
+        let topSpeed = 0;
+        let index = -1;
+        console.log(persons[i].sessions)
+        for (let j = 0;j<persons[i].sessions.length; j++) {
+            if (persons[i].sessions[j].speed > topSpeed) {
+                topSpeed = persons[i].sessions[j].speed;
+                index = j;
+            }
+        }
+        if (index!==-1) {
+            display.push(persons[i].sessions[index]);
         }
     }
+    display = display.sort((a,b)=>{
+        return  b.speed - a.speed
+    })
     return (
         <>
             <div style={{maxWidth:"1000px",margin:"0 auto",display:"flex",flexDirection:"column"}}>
@@ -75,11 +85,11 @@ const RankPage = () => {
                             <th>speed</th>
                             <th>raw</th>
                             <th>accuracy</th>
-                            <th>date</th>
+                            <th>lastActiveAt</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {persons.slice(page,page+11).map(person=><Rank key={person.id} id={person.id} name={person.name} speed={person.speed} raw={person.rawspeed} accuracy={person.accuracy} date={person.lastupdated}/>)}
+                    {display.map((person,i)=><Rank key={i+1} id={i+1} name={person.name} speed={person.speed} raw={person.rawspeed} accuracy={person.accuracy} date={person.lastActiveAt}/>)}
                     </tbody>
                 </table>
             </div>
