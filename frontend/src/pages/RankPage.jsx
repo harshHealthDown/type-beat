@@ -50,7 +50,7 @@ const RankPage = () => {
     const [persons,setPersons] = useState([])
     const [page,setPage] = useState(0)
     useEffect(()=>{
-        axios.get('http://localhost:3001/api/users').then(res => {
+        axios.get('/api/users').then(res => {
             setPersons(res.data)
         })
         console.log('get data')

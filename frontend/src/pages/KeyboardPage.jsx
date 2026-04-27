@@ -33,7 +33,7 @@ const KeyboardPage = () => {
         if (user) {
             console.log(user,token,'k')
             try {
-                await axios.post('http://localhost:3001/api/session',{
+                await axios.post('/api/session',{
                     name:user,
                     speed:speed,
                     rawspeed:raw,

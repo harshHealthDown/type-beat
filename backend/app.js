@@ -6,7 +6,7 @@ const middleware = require('./utils/middleware')
 const sessionRouter = require('./controllers/session')
 const usersRouter = require('./controllers/user')
 const loginRouter = require('./controllers/login')
-const cors = require('cors')
+// const cors = require('cors')
 
 const app = express()
 
@@ -20,7 +20,7 @@ mongoose.connect(config.MONGODB_URI, {family: 4})
     logger.error('error connection to MongoDB:', error.message)
   })
 
-app.use(cors())
+// app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)

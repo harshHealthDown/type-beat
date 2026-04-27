@@ -4,7 +4,7 @@ import { setToken } from "../services/token";
 import { useState } from "react";
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001/'
+// const baseUrl = 'http://localhost:3001/'
 
 const RegisterPage = () => {
     const [username,setUsername] = useState('')
@@ -22,7 +22,7 @@ const RegisterPage = () => {
                 alert('confirm password is not correct')
             } else {
                 try {
-                    const res = await axios.post(baseUrl+'api/users',{
+                    const res = await axios.post('/api/users',{
                         username: username,
                         name: name,
                         password: password
@@ -47,7 +47,7 @@ const RegisterPage = () => {
     const login = async (event) => {
         event.preventDefault()
         if ( loginUserName && loginPassword ) {
-            const res = await axios.post(baseUrl+'api/login',{
+            const res = await axios.post('/api/login',{
                 username: loginUserName,
                 password: loginPassword
             })

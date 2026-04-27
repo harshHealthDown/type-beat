@@ -48,10 +48,9 @@ const AccountPage = () => {
     const [person,setPerson] = useState({})
     const [page,setPage] = useState(0)
     const date = new Date()
-    console.log(`http://localhost:3001/api/users/${id}`)
     useEffect(()=>{
         setTimeout(()=>{
-            axios.get(`http://localhost:3001/api/users/${id}`).then(res => {
+            axios.get(`/api/users/${id}`).then(res => {
                 setPerson(res.data)
             }
         ,1000)
